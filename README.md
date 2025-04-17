@@ -2,7 +2,7 @@
 
 ## Descrizione
 TaskHub è un'applicazione backend da scrivere in Java utilizzando Spring Boot (versione 3). 
-Permette di gestire utenti, progetti e task all'interno di un sistema collaborativo. 
+Devi esporre delle API ReST che consentano di gestire Progetti, Utenti e Task
 
 Condizioni fondamentali:
 Gli utenti possono essere assegnati a più progetti.
@@ -41,8 +41,11 @@ I task possono essere assegnati a uno o più utenti.
 ---
 
 ## Servizi ReST (da implementare)
+
+Oltre al nome della risorsa, cerca di implementare anche un buon sistema di validazione dell'input (cerca java validator) e scegli il verbo http corretto
+
 ### Utenti
-- Creazione utente (
+- Creazione utente
 - Lista utenti
 
 ### Progetti
@@ -59,17 +62,20 @@ I task possono essere assegnati a uno o più utenti.
 ---
 
 ## To-do
-- Progettare le entità e relazioni (User, Project, Task)
-- Implementare la logica di business nei service
+- Progettare le entità e relazioni (User, Project, Task) usando Spring-JPA
+- Utilizza la metodologia classica Controller - Service - Repository (usa i Repository di Spring per le query)
 - Creare controller REST e mappare le risposte con DTO
-- Gestire errori con @ControllerAdvice
-- Aggiungere test per almeno ProjectService e TaskController
-- (Extra) Aggiungere autenticazione JWT
-
 ---
 
 ## Extra challenge
 - Endpoint per task in scadenza entro 3 giorni
 - Esportazione dei task in CSV
 - Reportistica (numero task completati per progetto)
+
+## A Seguire
+- Gestione degli errori centralizzata con @ControllerAdvice
+- Aggiungere test
+- Spring Security per autenticazione e autorizzazione
+- (Extra) Aggiungere autenticazione JWT
+
 
