@@ -1,5 +1,7 @@
 package TaskHub.TaskHub.service;
 
+import TaskHub.TaskHub.dto.ProjectRequest;
+import TaskHub.TaskHub.exceptions.ProjectAlreadyExistsException;
 import TaskHub.TaskHub.model.Project;
 import TaskHub.TaskHub.model.User;
 import TaskHub.TaskHub.repository.ProjectRepository;
@@ -19,7 +21,12 @@ public class ProjectService {
     @Autowired
     UserRepository userRepository;
 
-    public Project createNewProject(Project project) {
+    public Project createNewProject(ProjectRequest request) throws ProjectAlreadyExistsException {
+        if (projectRepository.findByName(request.getName()).isPresent()) {
+            throw new ProjectAlreadyExistsException("Project with this name already exists");
+        }
+        Project project = new Project();
+        project.setName(request.getName());
         return projectRepository.save(project);
     }
 

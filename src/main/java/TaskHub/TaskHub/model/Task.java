@@ -3,13 +3,19 @@ package TaskHub.TaskHub.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
 @Table(name = "task")
-@Data
+@NoArgsConstructor
+@Getter
+@Setter
 public class Task {
 
     @Id
@@ -29,11 +35,22 @@ public class Task {
     @JsonBackReference
     private Project project;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "Task_Users",
             joinColumns = { @JoinColumn(name = "taskId") },
             inverseJoinColumns = { @JoinColumn(name = "userId")})
+
     private List<User> users;
 
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", state='" + state + '\'' +
+                ", description='" + description + '\'' +
+                ", dateAdded=" + dateAdded +
+                ", project=" + project +
+                '}';
+    }
 }

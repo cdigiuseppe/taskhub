@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: TaskHub
+  datasource:
+    url:  jdbc:postgresql://localhost:5432/taskhub
+    username: postgres
+    password: 123
+    jpa:
+      hibernate:
+        ddl-auto: update
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect

@@ -1,5 +1,8 @@
 package TaskHub.TaskHub.controller;
 
+import TaskHub.TaskHub.converters.ProjectConverter;
+import TaskHub.TaskHub.dto.ProjectDto;
+import TaskHub.TaskHub.dto.ProjectRequest;
 import TaskHub.TaskHub.model.Project;
 import TaskHub.TaskHub.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,33 +10,32 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 
 @RestController
+@RequestMapping("/projects")
 public class ProjectController {
 
-    @Autowired
-    ProjectService projectService;
+    private final ProjectService projectService;
 
-    @PostMapping("/createNewProject")
-    public ResponseEntity<?> createNewProject(@RequestBody Project project){
-        if(projectService.findByName(project.getName()).isEmpty()) {
-            Project createNewProject = projectService.createNewProject(project);
-            return new ResponseEntity<>(createNewProject, HttpStatus.CREATED);
-        }else {
-            HashMap<String, String> error = new HashMap<>();
-            error.put("errore", "Esiste già un progetto con questo nome");
-            return new ResponseEntity<>(error, HttpStatus.CONFLICT);
-        }
+    public ProjectController(ProjectService projectService) {
+        this.projectService = projectService;
     }
 
-    @GetMapping("/allProjects")
+    @PostMapping()
+    public ResponseEntity<ProjectDto> createNewProject(@RequestBody @Valid ProjectRequest request) {
+        Project project = projectService.createNewProject(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ProjectConverter().convertiDaEntity(project));
+    }
+
+    @GetMapping()
     public List<Project> getProjects(){
         return projectService.getAllProjects();
     }
 
-    @PostMapping("/projects/{projectId}/users/{userId}")
+    @PostMapping("/{projectId}/users/{userId}")
     public ResponseEntity<String> assignUserToProject(@PathVariable int projectId, @PathVariable int userId){
         if (projectService.assignUserToProject(projectId, userId)){
             return ResponseEntity.ok("User assigned");
