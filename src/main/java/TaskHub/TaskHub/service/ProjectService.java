@@ -9,6 +9,7 @@ import TaskHub.TaskHub.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +28,7 @@ public class ProjectService {
         }
         Project project = new Project();
         project.setName(request.getName());
+        project.setDateAdded(new Timestamp(System.currentTimeMillis()));
         return projectRepository.save(project);
     }
 
