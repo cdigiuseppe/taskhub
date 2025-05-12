@@ -10,11 +10,9 @@ public class ProjectConverter implements Converter<ProjectDto, Project> {
             return null;
         }
 
-        ProjectDto projectDto = new ProjectDto();
-        projectDto.setId(project.getId());
-        projectDto.setName(project.getName());
-        projectDto.setDateAdded(project.getDateAdded());
-        return projectDto;
+        return new ProjectDto(project.getId(),
+        project.getName(),
+        project.getDateAdded());
     }
 
     @Override

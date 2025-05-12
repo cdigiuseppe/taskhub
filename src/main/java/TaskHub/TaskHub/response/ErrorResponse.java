@@ -1,4 +1,4 @@
-package TaskHub.TaskHub.dto;
+package TaskHub.TaskHub.response;
 
 import lombok.Data;
 import org.springframework.http.HttpStatus;

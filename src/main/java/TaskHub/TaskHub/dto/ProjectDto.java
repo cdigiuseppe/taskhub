@@ -13,4 +13,10 @@ public class ProjectDto {
     private String name;
     private Timestamp dateAdded;
     private List<UserDto> users;
+
+    public ProjectDto(int id, String name, Timestamp dateAdded) {
+        this.id = id;
+        this.name = name;
+        this.dateAdded = dateAdded;
+    }
 }

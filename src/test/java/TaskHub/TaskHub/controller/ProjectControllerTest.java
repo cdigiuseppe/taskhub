@@ -2,7 +2,7 @@ package TaskHub.TaskHub.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import TaskHub.TaskHub.dto.ProjectRequest;
+import TaskHub.TaskHub.request.ProjectRequest;
 import TaskHub.TaskHub.model.Project;
 import TaskHub.TaskHub.repository.ProjectRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;

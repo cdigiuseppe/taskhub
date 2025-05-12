@@ -1,6 +1,6 @@
 package TaskHub.TaskHub.exceptions;
 
-import TaskHub.TaskHub.dto.ErrorResponse;
+import TaskHub.TaskHub.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

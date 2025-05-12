@@ -1,12 +1,14 @@
 package TaskHub.TaskHub.service;
 
-import TaskHub.TaskHub.dto.ProjectRequest;
+import TaskHub.TaskHub.dto.ProjectDto;
+import TaskHub.TaskHub.request.ProjectRequest;
 import TaskHub.TaskHub.exceptions.ProjectAlreadyExistsException;
+import TaskHub.TaskHub.exceptions.ProjectNotExistException;
+import TaskHub.TaskHub.exceptions.UserNotExistException;
 import TaskHub.TaskHub.model.Project;
 import TaskHub.TaskHub.model.User;
 import TaskHub.TaskHub.repository.ProjectRepository;
 import TaskHub.TaskHub.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -16,11 +18,14 @@ import java.util.Optional;
 @Service
 public class ProjectService {
 
-    @Autowired
-    ProjectRepository projectRepository;
 
-    @Autowired
-    UserRepository userRepository;
+    private final ProjectRepository projectRepository;
+    private final UserRepository userRepository;
+
+    public ProjectService(ProjectRepository projectRepository, UserRepository userRepository) {
+        this.projectRepository = projectRepository;
+        this.userRepository = userRepository;
+    }
 
     public Project createNewProject(ProjectRequest request) throws ProjectAlreadyExistsException {
         if (projectRepository.findByName(request.getName()).isPresent()) {
@@ -36,21 +41,27 @@ public class ProjectService {
         return projectRepository.findByName(name);
     }
 
-    public List<Project> getAllProjects(){
-        return projectRepository.findAll();
+    public List<ProjectDto> getAllProjects(){
+        return projectRepository.findAll().stream()
+                .map(project -> new ProjectDto(project.getId(), project.getName(), project.getDateAdded()))
+                .toList();
     }
 
-    public boolean assignUserToProject(int projectId, int userId){
+    public void assignUserToProject(int projectId, int userId) throws ProjectNotExistException, UserNotExistException {
         Optional<Project> optionalProject = projectRepository.findById(projectId);
         Optional<User> optionalUser = userRepository.findById(userId);
 
-        if (optionalProject.isPresent() && optionalUser.isPresent()){
+        if (optionalProject.isPresent() && optionalUser.isPresent()) {
             Project project = optionalProject.get();
             User user = optionalUser.get();
             project.getUsers().add(user);
             projectRepository.save(project);
-            return true;
         }
-        return false;
+        if (optionalProject.isEmpty()) {
+            throw new ProjectNotExistException("Project not found");
+        }
+        if (optionalUser.isEmpty()) {
+            throw new UserNotExistException("User not found");
+        }
     }
 }
