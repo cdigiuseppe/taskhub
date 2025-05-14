@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 
 @Getter
 @Setter
-public class UserDto {
+public class UserDto extends Dto {
     private int id;
     private String name;
     private String surname;

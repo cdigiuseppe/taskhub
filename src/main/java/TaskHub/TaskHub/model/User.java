@@ -2,6 +2,7 @@ package TaskHub.TaskHub.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 import lombok.Data;
 import java.sql.Timestamp;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @Data
-public class User {
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

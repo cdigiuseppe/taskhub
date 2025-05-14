@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 
-public class TaskDto {
+public class TaskDto extends Dto {
     private int id;
     private String state;
     private String description;

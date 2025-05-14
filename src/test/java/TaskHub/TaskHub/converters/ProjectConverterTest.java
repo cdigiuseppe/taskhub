@@ -35,10 +35,7 @@ class ProjectConverterTest {
 
     @Test
     void convertiDaDto_shouldMapAllFieldsCorrectly() {
-        ProjectDto projectDto = new ProjectDto();
-        projectDto.setId(1);
-        projectDto.setName("Test Project");
-        projectDto.setDateAdded(new Timestamp(System.currentTimeMillis()));
+        ProjectDto projectDto = new ProjectDto(1, "Test Project", new Timestamp(System.currentTimeMillis()));
 
         ProjectConverter converter = new ProjectConverter();
         Project project = converter.convertiDaDto(projectDto);

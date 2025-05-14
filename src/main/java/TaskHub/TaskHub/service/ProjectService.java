@@ -51,6 +51,7 @@ public class ProjectService {
         Optional<Project> optionalProject = projectRepository.findById(projectId);
         Optional<User> optionalUser = userRepository.findById(userId);
 
+
         if (optionalProject.isPresent() && optionalUser.isPresent()) {
             Project project = optionalProject.get();
             User user = optionalUser.get();

@@ -8,7 +8,7 @@ import java.util.List;
 
 @Setter
 @Getter
-public class ProjectDto {
+public class ProjectDto extends Dto {
     private int id;
     private String name;
     private Timestamp dateAdded;
